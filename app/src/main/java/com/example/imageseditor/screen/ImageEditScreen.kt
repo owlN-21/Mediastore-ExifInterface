@@ -1,8 +1,10 @@
 package com.example.imageseditor.screen
 
+import android.R.attr.checked
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.imageseditor.data.EncryptedPrefs
 import com.example.imageseditor.dto.ImageExifInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +49,12 @@ fun ImageEditScreen(
     viewModel: ImageEditViewModel = viewModel()
 )
 {
-    var useDefaults by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val settings = remember { EncryptedPrefs(context) }
+
+    var useDefaults by remember {
+        mutableStateOf(settings.getUseDefaults())
+    }
 
     Scaffold(
         topBar = {
@@ -107,18 +115,24 @@ fun ImageEditScreen(
                 label = { Text("Модель") },
                 modifier = Modifier.fillMaxWidth()
             )
-            Checkbox(
-                checked = useDefaults,
-                onCheckedChange = {
-                    useDefaults = it
-                    viewModel.applyDefaultValues(it)
-                }
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = useDefaults,
+                    onCheckedChange = { checked ->
+                        useDefaults = checked
+                        settings.saveUseDefaults(checked)
+                        viewModel.applyDefaultValues(checked)
+                    }
+                )
 
-            Text(
-                text = "Использовать тестовые значения",
-                modifier = Modifier.padding(start = 8.dp)
-            )
+                Text(
+                    text = "Использовать тестовые значения",
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+
 
             Button(
                 onClick = {
