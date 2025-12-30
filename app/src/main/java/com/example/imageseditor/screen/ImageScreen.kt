@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +41,7 @@ import coil.compose.AsyncImage
 fun ImagePreviewScreen(
     imageUri: Uri,
     onBack: () -> Unit,
+    onEditClick: (String) -> Unit,
     viewModel: ImageScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val exifInfo by viewModel.exifInfo.collectAsState()
@@ -55,6 +60,19 @@ fun ImagePreviewScreen(
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    val encodedUri = Uri.encode(imageUri.toString())
+                    onEditClick(encodedUri)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Редактировать EXIF"
+                )
+            }
         }
     ) { padding ->
         Column(
