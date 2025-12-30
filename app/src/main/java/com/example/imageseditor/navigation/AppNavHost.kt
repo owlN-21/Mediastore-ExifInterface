@@ -1,5 +1,6 @@
 package com.example.imageseditor.navigation
 
+
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -7,9 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.imageseditor.ImagePreviewScreen
-import com.example.imageseditor.SinglePicker
-
+import com.example.imageseditor.screen.ImagePreviewScreen
+import com.example.imageseditor.screen.SinglePickerScreen
 
 @Composable
 fun AppNavHost() {
@@ -21,7 +21,7 @@ fun AppNavHost() {
     ) {
 
         composable("picker") {
-            SinglePicker { uri ->
+            SinglePickerScreen { uri ->
                 navController.navigate("preview/${Uri.encode(uri.toString())}")
             }
         }
