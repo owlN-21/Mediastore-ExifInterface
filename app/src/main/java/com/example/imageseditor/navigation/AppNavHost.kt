@@ -1,0 +1,44 @@
+package com.example.imageseditor.navigation
+
+import android.net.Uri
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.imageseditor.ImagePreviewScreen
+import com.example.imageseditor.SinglePicker
+
+
+@Composable
+fun AppNavHost() {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "picker"
+    ) {
+
+        composable("picker") {
+            SinglePicker { uri ->
+                navController.navigate("preview/${Uri.encode(uri.toString())}")
+            }
+        }
+
+        composable(
+            route = "preview/{uri}",
+            arguments = listOf(
+                navArgument("uri") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val uriString = backStackEntry.arguments?.getString("uri")!!
+            val uri = Uri.parse(uriString)
+
+            ImagePreviewScreen(
+                imageUri = uri,
+                onBack = { navController.popBackStack() }
+            )
+        }
+    }
+}
