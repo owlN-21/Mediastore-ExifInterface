@@ -100,33 +100,31 @@ fun ImagePreviewScreen(
             )
             val exif = exifInfo
 
-            if (exif == null) {
-                Text(
-                    text = "EXIF данные отсутствуют",
-                    modifier = Modifier.padding(16.dp)
-                )
-            } else {
-                exif.date?.let {
-                    Text("Дата создания: $it", modifier = Modifier.padding(horizontal = 16.dp))
-                }
 
-                exif.latitude?.let {
-                    Text("Широта: $it", modifier = Modifier.padding(horizontal = 16.dp))
-                }
+            Text(
+                text = "Дата создания: ${exif?.date ?: "—"}",
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
-                exif.longitude?.let {
-                    Text("Долгота: $it", modifier = Modifier.padding(horizontal = 16.dp))
-                }
+            Text(
+                text = "Широта: ${exif?.latitude ?: "—"}",
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
-                exif.device?.let {
-                    Text("Устройство: $it", modifier = Modifier.padding(horizontal = 16.dp))
-                }
+            Text(
+                text = "Долгота: ${exif?.longitude ?: "—"}",
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
-                exif.model?.let {
-                    Text("Модель: $it", modifier = Modifier.padding(horizontal = 16.dp))
-                }
-            }
+            Text(
+                text = "Устройство: ${exif?.device ?: "—"}",
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
+            Text(
+                text = "Модель: ${exif?.model ?: "—"}",
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
         }
     }
 }

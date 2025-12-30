@@ -58,6 +58,7 @@ fun AppNavHost() {
                 imageUri = uri,
                 onBack = { navController.popBackStack() }
             )
+
         }
 
     }
