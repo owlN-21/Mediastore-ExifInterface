@@ -56,7 +56,14 @@ fun AppNavHost() {
 
             ImageEditScreen(
                 imageUri = uri,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onDone = {
+                    navController.navigate("picker") {
+                        popUpTo("picker") {
+                            inclusive = true
+                        }
+                    }
+                }
             )
 
         }

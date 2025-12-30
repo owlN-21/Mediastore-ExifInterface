@@ -32,7 +32,7 @@ object MediaStoreRepository {
         return imageUris
     }
 
-    // 🔥 НОВОЕ: создаём копию изображения с новым EXIF
+    // создаём копию изображения с новым EXIF
     fun createEditedImage(
         context: Context,
         sourceUri: Uri,

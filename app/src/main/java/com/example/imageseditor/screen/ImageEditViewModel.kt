@@ -42,4 +42,30 @@ class ImageEditViewModel : ViewModel() {
     fun onLongitudeChange(value: String) { longitude = value }
     fun onDeviceChange(value: String) { device = value }
     fun onModelChange(value: String) { model = value }
+
+    private val defaultExif = ImageExifInfo(
+        date = "2024:12:30 16:27:38",
+        latitude = 55.753930,
+        longitude = 37.620795,
+        device = "TestCamera",
+        model = "Pixel 8 Pro"
+    )
+
+    fun applyDefaultValues(enabled: Boolean) {
+        if (enabled) {
+            date = defaultExif.date.orEmpty()
+            latitude = defaultExif.latitude.toString()
+            longitude = defaultExif.longitude.toString()
+            device = defaultExif.device.orEmpty()
+            model = defaultExif.model.orEmpty()
+        } else {
+
+            date = ""
+            latitude = ""
+            longitude = ""
+            device = ""
+            model = ""
+        }
+    }
+
 }
